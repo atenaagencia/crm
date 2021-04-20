@@ -26,6 +26,20 @@ class Client extends Model
         'representante'
     ];
 
+    public function getEstagioAttribute($value)
+    {
+      switch ($value) {
+          case 'aguardando':
+              return 'Aguardando';
+              break;          
+          case 'contato':
+              return 'Em Contato';
+              break;          
+          default:
+              return $value;
+              break;
+      }
+    }
 
     public function niche()
     {
