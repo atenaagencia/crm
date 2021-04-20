@@ -58,7 +58,7 @@ class TargetController extends Controller
                 'user_id' => Auth::user()->id
             ]);
         } else {
-            return ' não existe';
+            session()->flash('message', 'Não existe vendedor para vincular o alvo');;
         }
 
         return redirect()->route('target.index');

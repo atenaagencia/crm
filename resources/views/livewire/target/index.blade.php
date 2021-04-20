@@ -3,8 +3,10 @@
         <h3 class="card-title">Alvos</h3>
         <div class="card-tools">
             <ul class="pagination pagination-sm float-right">
+                @if(Auth::user()->role->label == "admin")
                 <li class="page-item"><button class="page-link bg-info" data-toggle="modal"
                         data-target="#target-create"><i class="fas fa-plus"></i></button></li>
+                @endif
             </ul>
         </div>
     </div>
