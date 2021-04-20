@@ -101,6 +101,24 @@ Perfil
                         <!-- /.tab-pane -->
     
                         <div class="tab-pane" id="settings">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6 col-12">
+                                    <a href="{{route('resetPassword')}}">
+                                    <div class="info-box">
+                                        <span class="info-box-icon bg-info"><i class="fas fa-key"></i></span>
+                            
+                                        <div class="info-box-content">
+                                            <span class="info-box-text">Alterar Senha</span>
+                                            {{-- <span class="info-box-number">1,410</span> --}}
+                                        </div>
+                                        <!-- /.info-box-content -->
+                                    </div>
+                                    </a>
+                                    <!-- /.info-box -->
+                                </div>
+                                <!-- /.col -->
+                           
+                            </div>
                          
                         </div>
                         <!-- /.tab-pane -->

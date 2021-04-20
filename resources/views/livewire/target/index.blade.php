@@ -1,4 +1,4 @@
-<div class="card" wire:poll="mount">
+<div class="card" wire:poll.750ms="mount">
     <div class="card-header bg-purple">
         <h3 class="card-title">Alvos</h3>
         <div class="card-tools">
@@ -9,6 +9,37 @@
         </div>
     </div>
     <div class="card-body p-0">
+        <div class="row pt-3 pl-3">
+            @if(Auth::user()->role->label == 'admin')
+            <div class="col-sm-4">
+                <!-- select -->
+                <div class="form-group">
+                    <select class="form-control" wire:model="filter" >
+                        <option value="">-----Filtrar por vendedor-----</option>
+                      @foreach ($vendedores as $vendedor )
+                          <option value="{{$vendedor->id}}">{{$vendedor->name}}</option>
+                      @endforeach
+                    </select>
+                </div>
+            </div>         
+            @endif
+            <div class="col-sm-4">
+                <!-- select -->
+                <div class="form-group">
+                    <select class="form-control" wire:model="phase">
+                        <option value="">-----Filtrar por estágio----</option>
+                        <option value="aguardando">Aguardando</option>
+                        <option value="contato">Em contato</option>
+                        <option value="proposta">Em proposta</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-info" wire:click="resetFilter">
+                    Limpar filtros
+                </button>
+            </div>
+        </div>
         <table class="table text-center">
             <thead>
                 <tr>

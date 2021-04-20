@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Record;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\UserRequest;
+use App\Models\Client;
 
-class UserController extends Controller
+class RecordController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-      
-        $users = User::all();
-        return view('pages.user.indexUser')->with('users', $users);
+        //
     }
 
     /**
@@ -29,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('pages.user.createUser');
+        //
     }
 
     /**
@@ -38,43 +35,46 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
-        $validated = $request->validated();
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'cpf' => $request->cpf,
-            'password' => Hash::make($request->cpf),
-            'role_id' => $request->role_id,
+        $record = Record::create([
+            'descricao' => $request->descricao,
+            'client_id' => $request->client_id,
+            'user_id' => Auth::user()->id
         ]);
 
-        if ($user) {
-            session()->flash('message', 'Usuário Cadastrado');
+
+        $client  = Client::find($request->client_id);
+
+        if ($client->estagio == "aguardando") {
+            $client->estagio = "contato";
+            $client->save();
         }
 
-        return redirect()->route('user.index');
+        if ($record) {
+            session()->flash('message', 'Registro Atualizado');
+        }
+        return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Record  $record
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Record $record)
     {
-        return view('pages.user.ShowUser')->with('user', $user);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Record  $record
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Record $record)
     {
         //
     }
@@ -83,10 +83,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Record  $record
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Record $record)
     {
         //
     }
@@ -94,12 +94,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\Record  $record
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Record $record)
     {
         //
     }
-    
 }

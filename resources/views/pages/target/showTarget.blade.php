@@ -5,6 +5,7 @@ Alvo - Ficha
 @section('links')
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="/plugins/summernote/summernote-bs4.min.css">
 @endsection
 
 @section('content')
@@ -20,6 +21,11 @@ Alvo - Ficha
         </div>
     </div>
     <div class="card-body">
+        @if (session()->has('message'))
+            <div class="alert alert-info m-3">
+                {{session('message')}}
+            </div>
+            @endif
         <div class="row">
             <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
                 <div class="row">
@@ -89,7 +95,7 @@ Alvo - Ficha
                         <div class="post">
                             <hr>
                             <p>
-                                {{$record->descricao}}
+                                {!!$record->descricao!!}
                             </p>
 
                             <p>
@@ -156,9 +162,10 @@ Alvo - Ficha
                     </li>
                 </ul> --}}
                 <div class="text-center mt-5 mb-3">
-                    <a href="#" class="btn btn-sm btn-primary">
+                    <button data-toggle="modal" data-target="#target-record" class="btn btn-sm btn-primary">
                         <i class="fas fa-comment"></i>
-                        Registrar Atendimento</a>
+                        Registrar Atendimento
+                    </button>
                     <a href="#" class="btn btn-sm btn-warning">
                         <i class="fas fa-list"></i>
                         Gerar Proposta</a>
@@ -172,7 +179,46 @@ Alvo - Ficha
                             Footer
                         </div> --}}
     <!-- /.card-footer-->
+
+<div class="modal fade" id="target-record">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h4 class="modal-title">Registrar Atendimento</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{{route('record.store')}}">
+                    @csrf
+                    <input type="hidden" name="client_id" value="{{$target->id}}">
+                    <textarea id="summernote" name="descricao"  cols="30" rows="30" class="form-control" required>
+
+                    </textarea>
+                    <button type="submit" class="btn btn-info btn-block mt-2">Registrar</button>
+                </form>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                {{-- <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button> --}}
+
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 </div>
 <!-- /.card -->
 
 @endsection
+
+@push('scripts')
+<script src="/plugins/summernote/summernote-bs4.min.js"></script>
+  <script>
+      $('#summernote').summernote({
+          height: 250,
+      });
+  </script>
+@endpush

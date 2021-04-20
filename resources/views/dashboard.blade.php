@@ -20,6 +20,11 @@ Dashboard
         <h3 class="card-title">Dashboard</h3>
     </div>
     <div class="card-body">
+       @if (session()->has('message'))
+        <div class="alert alert-info m-3">
+            {{session('message')}}
+        </div>
+        @endif
         <div class="row">
             <div class="col-lg-3 col-6">
                 <!-- small box -->
